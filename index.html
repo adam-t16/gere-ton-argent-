@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#646cff" />
+    <meta name="description" content="Application de gestion des finances et d'épargne" />
+    <title>Gestion des Finances & Épargne</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Gestion des Finances & Épargne</h1>
+        <div class="header-actions">
+          <button id="exportData" class="btn" title="Exporter les données">📊</button>
+          <button id="darkModeToggle" class="theme-toggle" aria-label="Changer le thème">🌙</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="dashboard" class="section">
+          <div class="dashboard-grid">
+            <div class="card balance">
+              <h2>Solde Total</h2>
+              <p class="amount" id="totalBalance">0 DH</p>
+            </div>
+            <div class="card bank">
+              <h2>Compte Bancaire</h2>
+              <p class="amount" id="bankBalance">0 DH</p>
+            </div>
+            <div class="card savings">
+              <h2>Épargne</h2>
+              <p class="amount" id="currentSavings">0 DH</p>
+              <div class="progress-bar">
+                <div id="savingsProgress" class="progress"></div>
+              </div>
+              <p class="target">Objectif: 10,000 DH</p>
+            </div>
+            <div class="card daily">
+              <h2>Dépôt du Jour</h2>
+              <p class="amount" id="dailyDeposit">0 DH</p>
+              <button id="markDeposit" class="btn primary">Marquer comme déposé</button>
+            </div>
+            <div class="card allowance">
+              <h2>Argent de Poche</h2>
+              <p class="amount" id="dailyAllowance">0 DH</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+          </div>
+        </section>
+
+        <section id="bank" class="section">
+          <div class="card">
+            <h2>Transfert Bancaire</h2>
+            <form id="bankForm">
+              <div class="form-group">
+                <label for="transferType">Type de transfert</label>
+                <select id="transferType" required>
+                  <option value="deposit">Déposer à la banque</option>
+                  <option value="withdraw">Retirer de la banque</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="bankAmount">Montant</label>
+                <input type="number" id="bankAmount" placeholder="Montant" required min="0" step="0.01">
+              </div>
+              <button type="submit" class="btn primary">Effectuer le transfert</button>
+            </form>
+          </div>
+        </section>
+
+        <section id="transactions" class="section">
+          <div class="transactions-grid">
+            <div class="form-container card">
+              <h2>Nouvelle Transaction</h2>
+              <form id="transactionForm">
+                <div class="form-group">
+                  <label for="transactionType">Type</label>
+                  <select id="transactionType" required>
+                    <option value="income">Revenu</option>
+                    <option value="expense">Dépense</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="amount">Montant</label>
+                  <input type="number" id="amount" placeholder="Montant" required min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                  <label for="category">Catégorie</label>
+                  <select id="category" required>
+                    <option value="salary">Salaire</option>
+                    <option value="allowance">Argent de poche</option>
+                    <option value="food">Nourriture</option>
+                    <option value="transport">Transport</option>
+                    <option value="leisure">Loisirs</option>
+                    <option value="other">Autre</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn primary">Ajouter</button>
+              </form>
+            </div>
+            <div class="card">
+              <h2>Historique des Transactions</h2>
+              <div id="transactionsList" class="transactions-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="settings" class="section">
+          <div class="card">
+            <h2>Paramètres</h2>
+            <form id="settingsForm">
+              <div class="form-group">
+                <label for="settingsAllowance">Argent de poche quotidien (DH)</label>
+                <input type="number" id="settingsAllowance" placeholder="Montant quotidien" min="0" step="0.01">
+              </div>
+              <div class="form-group">
+                <label for="settingsSavings">Objectif d'épargne quotidien (DH)</label>
+                <input type="number" id="settingsSavings" placeholder="Montant à épargner" min="0" step="0.01">
+              </div>
+              <button type="submit" class="btn primary">Enregistrer</button>
+            </form>
+          </div>
+        </section>
+
+        <section id="monthlyExpenses" class="section">
+          <div class="card">
+            <h2>Dépenses Mensuelles</h2>
+            <div id="monthlyExpensesList" class="expenses-list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
